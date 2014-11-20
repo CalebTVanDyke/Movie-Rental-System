@@ -1,0 +1,26 @@
+body {
+	background: #B9090B;
+}
+h1, h2, h3, h4, h5, a {
+	color:#ffffff;
+}
+.urs-container {
+	padding-top: 25px;
+	padding-left: 50px;
+	padding-right: 25px;
+	padding-bottom: 25px;
+	background-color: #4C4C4C;
+	border-radius: 25px;
+}
+@media only screen and (min-width:960px){
+    /* styles for browsers larger than 960px; */
+    img {
+		width:75px;
+	}
+}
+@media only screen and (min-width:1440px){
+    /* styles for browsers larger than 1440px; */
+    img {
+		width:115px;
+	}
+}
