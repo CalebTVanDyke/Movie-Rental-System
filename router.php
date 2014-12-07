@@ -1,6 +1,7 @@
 <?php
 require_once('objects/library.php');
 require_once('objects/user.php');
+require_once('objects/rating.php');
 
 session_start();
 
@@ -21,11 +22,42 @@ if(isset($_GET['function'])){
 	}
 	if($function == 'getBookInfo'){
 		$book = Library::getBook($_GET['copyID']);
-		echo "<h1 style='color:#333333'>".$book->getTitle()."</h1>".
+		$rating = new rating();
+		$data = $rating->getRatings($book->getID());
+		$ret =  "<h1 style='color:#333333'>".$book->getTitle()."</h1>".
 		     "<img src='images/".$book->getTitle().".jpg' alt='".$book->getTitle()."' border=10 style='width:500;'/>".
 			 "<BR><BR>Director:\t".$book->getAuthor().
 			 "<BR>Movie ID:\t".$book->getID().
-			 "<BR>Copy ID:\t".$book->getCopyID();
+			 "<BR>Copy ID:\t".$book->getCopyID().
+			 "<div id=\"r2\" class=\"rate_widget\">";
+		if($data["avg"] >= 1){
+			$ret = $ret."<div class=\"star_1 ratings_stars ratings_over\"></div>";
+		}else{
+			$ret = $ret."<div class=\"star_1 ratings_stars\"></div>";
+		}
+		if($data["avg"] >= 2){
+			$ret = $ret."<div class=\"star_2 ratings_stars ratings_over\"></div>";
+		}else{
+			$ret = $ret."<div class=\"star_2 ratings_stars\"></div>";
+		}
+		if($data["avg"] >= 3){
+			$ret = $ret."<div class=\"star_3 ratings_stars ratings_over\"></div>";
+		}else{
+			$ret = $ret."<div class=\"star_3 ratings_stars\"></div>";
+		}
+		if($data["avg"] >= 4){
+			$ret = $ret."<div class=\"star_4 ratings_stars ratings_over\"></div>";
+		}else{
+			$ret = $ret."<div class=\"star_4 ratings_stars\"></div>";
+		}
+		if($data["avg"] >= 5){
+			$ret = $ret."<div class=\"star_5 ratings_stars ratings_over\"></div>";
+		}else{
+			$ret = $ret."<div class=\"star_5 ratings_stars\"></div>";
+		}
+		$ret = $ret."<div>Number of ratings: ".$data["numRatings"]."</div><BR>";
+		$ret = $ret."</div>";
+		echo $ret;
 	 	return;
 	}
 	if($function == 'checkoutBook'){
@@ -33,6 +65,17 @@ if(isset($_GET['function'])){
 		return;
 	}
 	if($function == 'returnBook'){
+		$book = Book::getBookInfoByCopyID($_GET['copyID']);
+		$bookTitle = str_replace("_", " ", $book["Booktitle"]);
+		$ret = "<div>Would you please rate the move?</div>";
+		$ret = $ret."<div id=\"".$book["Bookid"]."\" class=\"rate_widget\">";
+		$ret = $ret."<div class=\"star_1 ratings_stars\"></div>";
+		$ret = $ret."<div class=\"star_2 ratings_stars\"></div>";
+		$ret = $ret."<div class=\"star_3 ratings_stars\"></div>";
+		$ret = $ret."<div class=\"star_4 ratings_stars\"></div>";
+		$ret = $ret."<div class=\"star_5 ratings_stars\"></div>";
+		$ret = $ret."</div>";
+		echo $ret;
 		User::returnBook($_GET['userID'], $_GET['copyID']);
 		return;
 	}
@@ -80,5 +123,16 @@ if(isset($_GET['function'])){
 		User::hasRentalDueToday($userName);
 		return;
 	}	
+	if($function == 'getRatings'){
+		$bookID = $_GET['BookID'];
+		$rating = new rating();
+		$rating->getRatings($bookID);
+	}
+	if($function == 'vote'){
+		$bookID = $_GET['BookID'];
+		$score = $_GET['Score'];
+		$rating = new rating();
+		$rating->updateRating($bookID, $score);
+	}
 }
 ?>

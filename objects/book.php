@@ -43,6 +43,18 @@ class Book
 		return $bookId;
 	}
 
+	public static function getBookInfoByCopyID($copyID){
+		$conn = DB::getConnection();
+
+		$result = mysqli_query($conn, "SELECT c.Bookid, b.Booktitle from bookscopy c INNER JOIN books b ON b.Bookid = c.Bookid where c.Groupnumber=10 and c.Copyid='".$copyID."'");
+		$row = mysqli_fetch_array($result);
+		$bookId = $row['Bookid'];
+		$bookInfo = array();
+		$bookInfo['Bookid'] = $row['Bookid'];
+		$bookInfo['Booktitle'] = $row['Booktitle'];
+		return $bookInfo;
+	}
+
 	public static function getNextCopyId(){
 		$conn = DB::getConnection();
 		$result = mysqli_query($conn, "SELECT Copyid from bookscopy where Groupnumber = 10 ORDER BY Copyid DESC");

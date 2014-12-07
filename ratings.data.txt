@@ -1,0 +1,1 @@
+a:3:{i:41;a:3:{s:10:"numRatings";i:4;s:6:"points";i:16;s:3:"avg";d:4;}s:0:"";a:3:{s:10:"numRatings";i:5;s:6:"points";i:12;s:3:"avg";d:2;}i:36;a:3:{s:10:"numRatings";i:1;s:6:"points";s:1:"1";s:3:"avg";d:1;}}

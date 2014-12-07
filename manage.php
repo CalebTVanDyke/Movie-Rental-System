@@ -63,6 +63,19 @@ $user = unserialize($_SESSION['user']);
 		</div>
 	</div>
 </div>
+	<!-- Modal for when a table cell is clicked -->
+	<div id="mymodal" class="modal fade">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-body" align="center">
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+	        <button id="submit" type="button" class="btn btn-primary student" style="display:none" data-dismiss="modal">Submit</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
 </body>
 </html>
 <script type="text/javascript">
@@ -79,6 +92,11 @@ function checkOutTable(){
 			$('#checkOutTable').html(result);
 		}
 	});
+}
+function showModal(body){
+    	// $('#mymodal .modal-title').html(title);
+    	$('#mymodal .modal-body').html(body);
+        $('#mymodal').modal('show');
 }
 $('#viewLoansBtn').click(function(){
 	var input = $('#viewUserHistory').val();
@@ -142,11 +160,29 @@ $('#returnBookBtn').click(function(){
 		url  : "router.php",
 		data : {"function":"returnBook","copyID":input.trim(),"userID":username},
 		success : function(result){
+			showModal(result);
 			checkOutTable();
 		}
 	});
 	$("#returnBookText").val("");
 });
+$(document).on("mouseover", ".ratings_stars", function(){
+	$(this).prevAll().andSelf().addClass('ratings_over');
+	$(this).nextAll().removeClass('ratings_over'); 
+})
+$("#submit").click(function(){
+	var numItems = $('.ratings_over').length;
+	var bookID = $(".rate_widget").attr("id");
+	console.log(bookID);
+	$.ajax({
+		type : "GET",
+		url  : "router.php",
+		data : {"function" : "vote", "BookID" : bookID, "Score" : numItems},
+		success : function(results){
+			console.log(results);
+		}
+	})
+})
 $(document).ready(function(){
 	checkOutTable();
 	if(<?php echo $user->isLib() ?>)
