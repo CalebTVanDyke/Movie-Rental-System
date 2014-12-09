@@ -113,7 +113,7 @@ class Library
 		$shelfID = self::getNonFullShelfID();
 
 		mysqli_query($conn, "INSERT INTO shelves VALUES(10, ".$shelfID.", ". $copyID .")");
-		return self::notifyUsers($copyID);
+		self::notifyUsers($copyID);
 
 		//mysqli_query($conn, "INSERT INTO shelves VALUES(10, ".$shelfID.", ". $copyID .")");
 		
@@ -256,8 +256,7 @@ class Library
 
 		if(isset($users['userList'])) {
 			for($i = 0; $i < count($users['userList']); $i++) {
-				echo(User::getUser($users['userList'][$i])->getEmail());
-				echo mail(User::getUser($users['userList'][$i])->getEmail(),
+				mail(User::getUser($users['userList'][$i])->getEmail(),
 						'Notification of Availability',
 						'You have requested to be notified of when: '.$bookTitle.'. This title has just become available!');
 			}	
