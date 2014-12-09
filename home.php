@@ -193,7 +193,7 @@ function requestNotification(bookTitle){
 		}
 	}).done(function(data) {
 		if(data === "ERROR") {
-			alert("Invalid Book Title");
+			alert("Invalid Movie Title");
 		}
 		else {
 			alert("Request logged");
@@ -263,7 +263,7 @@ $('#checkoutBookBtn').click(function(){
 		data : {"function":"checkoutBook","copyID":input.trim(),"userID":username},
 		success : function(result){
 			if(result == 'FAILED')
-				alert("You have already checked out book " + input + " before.");
+				alert("You have already checked out this movie " + input + " before.");
 			updateLib();
 			checkOutTable();
 		}
