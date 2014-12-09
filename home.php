@@ -5,9 +5,10 @@ require_once('objects/library.php');
 session_start();
 $user = unserialize($_SESSION['user']);
 
-mail("andy.guibert@gmail.com",
+/* mail("andy.guibert@gmail.com",
 	'[Unified Rental Service] Upcoming rental deadline',
 	'One of your rentals is due today, make sure you bring that back to us!');
+	*/
 ?>
 
 <html>
@@ -26,6 +27,12 @@ mail("andy.guibert@gmail.com",
 	    	<li><h4 class="navbar-text"><b>Unified Rental Service</b></h4>
 	    	<li class="active"><a href="#">Home</a></li>
 			<li><a href="manage.php">Account Management</a></li>
+			<li>
+				<div> 
+					<input id="searchTxt" type="text" placeholder="Search" required>
+					<button id ="searchBtn" type="button"> Search </button>
+				</div>
+			</li>
 		</ul>
 	    <ul class="nav navbar-nav navbar-right">
 			<li><button type="button" class="btn btn-danger navbar-btn" onclick="logout()">Logout <?php echo $user->getUsername() ?></button></li>
@@ -109,6 +116,22 @@ function getBookInfo(copyID){
 		}
 	});
 }
+
+function showSearch(title) {
+	$.ajax({
+		type: "GET",
+		url : "router.php",
+		data : {"function" : "showSearch", "title" : title},
+
+		success: function(result) {
+			$("#lib").html(result);
+			$('.book').click(function() {
+				getBookInfo($(this).find("input").val());
+			})
+		}
+	});
+};
+
 function updateLib(){
 	$.ajax({
 		type : "GET",
@@ -225,9 +248,16 @@ $('#checkoutBookBtn').click(function(){
 		}
 	});
 });
+
 $('#requestButton').click(function() {
 	requestNotification($('#requestField').val());
 });
+
+$('#searchBtn').click(function() {
+	var input = $("#searchTxt").val();
+	showSearch(input);
+});
+
 $(document).ready(function(){
 	updateLib();
 	checkOutTable();
