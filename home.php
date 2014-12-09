@@ -52,12 +52,17 @@ $user = unserialize($_SESSION['user']);
 				<table id="lib" class="table">
 				</table>
 			</div>
+			<div class="input-group col-md-4">
+				<input type="text" class="form-control" placeholder="Movie Title" id="requestField">
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="button" id="requestButton">Request Notification </button>
+				</span>
+			</div>
 		</div>
 	</div>
-	<div class="input-group col-md-offset-1">
-		<input type="text" class="form-control" placeholder="Movie Title" id="requestField">
-		<button class="input-group-addon" id="requestButton">Request Notification</button>
-	</div>
+	<br>
+	
+	
 	<!-- Modal for when a table cell is clicked -->
 	<div id="mymodal" class="modal fade">
 	  <div class="modal-dialog">
@@ -184,7 +189,14 @@ function requestNotification(bookTitle){
 		url  : "router.php",
 		data : {"function":"requestNotification","userID":username, "bookTitle": bookTitle},
 		success : function(result){
-			console.log(result);
+			
+		}
+	}).done(function(data) {
+		if(data === "ERROR") {
+			alert("Invalid Book Title");
+		}
+		else {
+			alert("Request logged");
 		}
 	});
 }
@@ -265,6 +277,7 @@ $('#searchTitleBtn').click(function() {
 
 $('#requestButton').click(function() {
 	requestNotification($('#requestField').val());
+	$('#requestField').val("");
 });
 
 
