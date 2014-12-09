@@ -54,6 +54,29 @@ class Library
 		}
 	}
 
+	public static function searchMoviesByTitle($title) {
+
+		$movies = self::getBooksByTitle($title);
+		$rowCount = 0;
+		if(sizeof($movies) > 0) {
+			$rowStr = "<TR>";
+			foreach($movies as &$movie) {
+				$rowStr .= "<TD class='book' styel='border-top:none'>";
+				$rowStr .= "<img class='span1' src='images/". $movie->getTitle() .".jpg' alt='". $movie->getTitle() ."' />"; // width=50% height=175
+				$rowStr .= "<input type='hidden' value='". $movie->getCopyID() ."'>";
+				$rowStr .= "</TD>";
+			}
+
+			$rowStr .= "</TR>";
+
+			if(strpos($rowStr, "class='book'") == true) {
+				echo $rowStr;
+			}
+		}
+
+
+	}
+
 	public static function doesBookExist($booktitle){
 		$exists = false;
 		$conn = DB::getConnection();
@@ -172,6 +195,22 @@ class Library
 		} else{
 			return $shelfs[$curShelf];
 		}
+	}
+
+	public static function getBooksByTitle($booktitle) {
+		$conn = DB::getConnection();
+		$result = mysqli_query($conn, 
+       		"SELECT * FROM shelves JOIN bookscopy ON shelves.Copyid=bookscopy.Copyid ".
+       		"JOIN books ON bookscopy.Bookid=books.Bookid WHERE shelves.Groupnumber=10 ".
+       		"and bookscopy.Groupnumber=10 and books.Groupnumber=10 and books.Booktitle='".$booktitle."'"
+       	);
+       	$matchingBooks = array();
+		while($row = mysqli_fetch_array($result)) {
+			//create an array of books 
+			array_push($matchingBooks, new Book($row['Booktitle'], $row['Author'], $row['Copyid'], $row['Bookid']));
+		} 
+
+		return $matchingBooks;
 	}
 
 	public static function getBook($copyID){
