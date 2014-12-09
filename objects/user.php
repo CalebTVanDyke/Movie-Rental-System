@@ -62,7 +62,7 @@ class User
 	public static function createOrUpdateRentalRecord($userid, $copyid){
 		$conn = DB::getConnection();
 		$query = "INSERT INTO loanHistory (Groupnumber, Username, Copyid, Duedate) ".
-		    "VALUES (10, '".$userid."', ".$copyid.", DATE_ADD(DATE(), INTERVAL 5 DAY))";
+		    "VALUES (10, '".$userid."', ".$copyid.", DATE_ADD(CURDATE(), INTERVAL 5 DAY))";
 		$result = mysqli_query($conn, $query);
 		/*if(!$result) {
 			$query = "UPDATE loanHistory SET Duedate=DATE_ADD(CURDATE(), INTERVAL 5 DAY), Returnedondate = NULL ".
