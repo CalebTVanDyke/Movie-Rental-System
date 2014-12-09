@@ -41,7 +41,7 @@ $user = unserialize($_SESSION['user']);
 		</ul>
 	    <ul class="nav navbar-nav navbar-right">
 			<li><button type="button" class="btn btn-danger navbar-btn" onclick="logout()">Logout <?php echo $user->getUsername() ?></button></li>
-			<li><a style="padding-right:10px"></a>
+			<li><a style="padding-right:10px"></a></li>
 		</ul>
 		</div>
 	</nav>
@@ -261,6 +261,7 @@ $('#checkoutBookBtn').click(function(){
 
 $('#searchTitleBtn').click(function() {
 	showSearch("title");
+});
 
 $('#requestButton').click(function() {
 	requestNotification($('#requestField').val());
