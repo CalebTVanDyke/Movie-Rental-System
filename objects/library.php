@@ -2,6 +2,7 @@
 require_once('dbutil.php');
 require_once('book.php');
 require_once('shelf.php');
+require_once('notification.php');
 
 class Library
 {
@@ -108,6 +109,10 @@ class Library
 	public static function addCopyToShelf($copyID){
 		$conn = DB::getConnection();
 		$shelfID = self::getNonFullShelfID();
+
+		mysqli_query($conn, "INSERT INTO shelves VALUES(10, ".$shelfID.", ". $copyID .")");
+		return self::notifyUsers($copyID);
+
 		//mysqli_query($conn, "INSERT INTO shelves VALUES(10, ".$shelfID.", ". $copyID .")");
 		
 		$file = "moviesOut.txt";
@@ -133,6 +138,7 @@ class Library
 			file_put_contents($file, serialize($data = array()));
 		
 		
+
 	}
 
 	public static function deleteCopy($copyID){
@@ -233,6 +239,27 @@ class Library
 				$shelves[] = $row['Shelfid'];
 		}
 		return $shelves;
+	}
+	
+	public static function addUserToPendingNotification($bookTitle, $username) {
+		$notification = new Notification();
+		return $notification->storeNotification($bookTitle, $username);
+	}
+	
+	private static function notifyUsers($copyID) {
+		$bookInfo = Book::getBookInfoByCopyID($copyID);
+		$bookTitle = str_replace("_", " ", $bookInfo["Booktitle"]);
+		$notification = new Notification();
+		$users = $notification->getNotifications($bookTitle);
+
+		if(isset($users['userList'])) {
+			for($i = 0; $i < count($users['userList']); $i++) {
+				echo(User::getUser($users['userList'][$i])->getEmail());
+				echo mail(User::getUser($users['userList'][$i])->getEmail(),
+						'Notification of Availability',
+						'You have requested to be notified of when: '.$bookTitle.'. This title has just become available!');
+			}	
+		}		
 	}
 }
 ?>
