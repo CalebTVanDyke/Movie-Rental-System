@@ -66,6 +66,7 @@ if(isset($_GET['function'])){
 	}
 	if($function == 'returnBook'){
 		$book = Book::getBookInfoByCopyID($_GET['copyID']);
+		echo $book['Booktitle'];
 		$bookTitle = str_replace("_", " ", $book["Booktitle"]);
 		$ret = "<div>Would you please rate the move?</div>";
 		$ret = $ret."<div id=\"".$book["Bookid"]."\" class=\"rate_widget\">";
@@ -133,6 +134,9 @@ if(isset($_GET['function'])){
 		$score = $_GET['Score'];
 		$rating = new rating();
 		$rating->updateRating($bookID, $score);
+	}
+	if($function == 'requestNotification') {
+		return Library::addUserToPendingNotification($_GET['bookTitle'], $_GET['userID']);
 	}
 }
 ?>
