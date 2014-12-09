@@ -12,6 +12,10 @@ if(isset($_GET['function'])){
 		Library::showLib();
 		return;
 	}
+	if($function === 'showSearch') {
+		Library::searchMoviesByTitle($_GET['title']);
+		return;
+	}
 	if($function === 'addBook'){
 		Library::addBook($_GET['title'], $_GET['author'], $_GET['qty']);
 		return;
