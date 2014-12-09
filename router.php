@@ -142,5 +142,9 @@ if(isset($_GET['function'])){
 		}
 		return Library::addUserToPendingNotification($_GET['bookTitle'], $_GET['userID']);
 	}
+	if($function === 'showSearch') {
+		Library::searchMoviesByTitle($_GET['title']);
+		return;
+	}
 }
 ?>
