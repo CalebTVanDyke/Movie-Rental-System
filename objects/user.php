@@ -64,11 +64,11 @@ class User
 		$query = "INSERT INTO loanHistory (Groupnumber, Username, Copyid, Duedate) ".
 		    "VALUES (10, '".$userid."', ".$copyid.", DATE_ADD(DATE(), INTERVAL 5 DAY))";
 		$result = mysqli_query($conn, $query);
-		if(!$result) {
+		/*if(!$result) {
 			$query = "UPDATE loanHistory SET Duedate=DATE_ADD(CURDATE(), INTERVAL 5 DAY), Returnedondate = NULL ".
 					" WHERE Groupnumber=10 and Username='".$userid."' and Copyid=".$copyid;
 			$result = mysqli_query($conn, $query);
-		}
+		}*/
 		return $result;
 	}
 
