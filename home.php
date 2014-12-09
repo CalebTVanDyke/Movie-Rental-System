@@ -28,10 +28,15 @@ $user = unserialize($_SESSION['user']);
 	    	<li class="active"><a href="#">Home</a></li>
 			<li><a href="manage.php">Account Management</a></li>
 			<li>
-				<div> 
-					<input id="searchTxt" type="text" placeholder="Search" required>
-					<button id ="searchBtn" type="button"> Search </button>
-				</div>
+				<form class="navbar-form navbar-left" role="search">
+  				<div class="form-group">
+   				 	<input id="searchTxt" type="text" class="form-control" placeholder="Search...">
+   				 	<div class="btn-group" role="group" aria-label="...">
+					  <button id ="searchTitleBtn" type="button" class="btn btn-default">ByTitle</button>
+					 <!-- <button id ="searchGenreBtn" type="button" class="btn btn-default">ByGenre</button> -->
+					</div>
+ 				 </div>
+				</form>
 			</li>
 		</ul>
 	    <ul class="nav navbar-nav navbar-right">
@@ -113,11 +118,15 @@ function getBookInfo(copyID){
 	});
 }
 
-function showSearch(title) {
+function showSearch(searchType) {
+
+	var input = $("#searchTxt").val();
+	input = input.replace(" ","_");
+
 	$.ajax({
 		type: "GET",
 		url : "router.php",
-		data : {"function" : "showSearch", "title" : title},
+		data : {"function" : "showSearch", "type" : searchType, "input": input},
 
 		success: function(result) {
 			$("#lib").html(result);
@@ -233,10 +242,13 @@ $('#checkoutBookBtn').click(function(){
 	});
 });
 
-$('#searchBtn').click(function() {
-	var input = $("#searchTxt").val();
-	showSearch(input);
+$('#searchTitleBtn').click(function() {
+	showSearch("title");
 });
+
+//$('#searchGenreBtn').click(function() {
+//	showSearch("genre");
+//});
 
 $(document).ready(function(){
 	updateLib();

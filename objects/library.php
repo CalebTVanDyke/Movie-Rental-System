@@ -73,8 +73,6 @@ class Library
 				echo $rowStr;
 			}
 		}
-
-
 	}
 
 	public static function doesBookExist($booktitle){
