@@ -1,6 +1,6 @@
 <?php
 
-include 'objects/user.php';
+include '../ConnectionModel/user.php';
 session_start();	
 
 if(isset($_POST['username'], $_POST['password'])){

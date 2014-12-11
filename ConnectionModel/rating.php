@@ -6,7 +6,7 @@
 class rating
 {
 
-	private $file = "ratings.data.txt";
+	private $file = "../DataModel/ratings.data.txt";
 	private $data = array();
 	
 	function __construct()

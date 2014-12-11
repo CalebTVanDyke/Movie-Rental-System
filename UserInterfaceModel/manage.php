@@ -1,5 +1,5 @@
 <?php
-require_once('objects/user.php');
+require_once('../ConnectionModel/user.php');
 session_start();
 $user = unserialize($_SESSION['user']);
 ?>
@@ -80,13 +80,13 @@ $user = unserialize($_SESSION['user']);
 </html>
 <script type="text/javascript">
 function logout(){
-	window.location.href = "index.php";
+	window.location.href = "UserInterfaceModel/index.php";
 }
 function checkOutTable(){
 	var username = "<?php echo $user->getUsername() ?>";
 	$.ajax({
 		type : "GET",
-		url	 : "router.php",
+		url	 : "ConnectionModel/router.php",
 		data : {"function" :"viewCheckOut", "userID"	:username},
 		success	: function(result){
 			$('#checkOutTable').html(result);
@@ -102,7 +102,7 @@ $('#viewLoansBtn').click(function(){
 	var input = $('#viewUserHistory').val();
 	$.ajax({
 		type : "GET",
-		url	 : "router.php",
+		url	 : "ConnectionModel/router.php",
 		data : {"function" :"viewLoans", "user"	:input, "exact":"true"},
 		success	: function(result){
 			$('#historyTable').html(result);
@@ -114,7 +114,7 @@ $('#viewUserHistory').keyup(function() {
 	var input = $('#viewUserHistory').val();
 	$.ajax({
 		type : "GET",
-		url	 : "router.php",
+		url	 : "ConnectionModel/router.php",
 		data : {"function" :"viewLoans", "user"	:input, "exact":"false"},
 		success	: function(result){
 			$('#historyTable').html(result);
@@ -128,7 +128,7 @@ $('#addBookBtn').click(function(){
 	var validated = false;
 	$.ajax({
 		type : "GET",
-		url  : "router.php",
+		url  : "ConnectionModel/router.php",
 		data : {"function":"validate","bookName":bookName,"author":author,"qty":qty},
 		async:   false,
 		success : function(result){
@@ -142,7 +142,7 @@ $('#addBookBtn').click(function(){
 		return;
 	$.ajax({
 		type : "GET",
-		url  : "router.php",
+		url  : "ConnectionModel/router.php",
 		data : {"function":"addBook","title":bookName,"author":author,"qty":qty},
 		success : function(result){
 			updateLib();
@@ -157,7 +157,7 @@ $('#returnBookBtn').click(function(){
 	var username = "<?php echo $user->getUsername() ?>";
 	$.ajax({
 		type : "GET",
-		url  : "router.php",
+		url  : "ConnectionModel/router.php",
 		data : {"function":"returnBook","copyID":input.trim(),"userID":username},
 		success : function(result){
 			showModal(result);
@@ -176,7 +176,7 @@ $("#submit").click(function(){
 	console.log(bookID);
 	$.ajax({
 		type : "GET",
-		url  : "router.php",
+		url  : "ConnectionModel/router.php",
 		data : {"function" : "vote", "BookID" : bookID, "Score" : numItems},
 		success : function(results){
 			console.log(results);

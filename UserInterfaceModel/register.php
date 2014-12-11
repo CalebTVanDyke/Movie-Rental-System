@@ -1,5 +1,5 @@
 <?php
-require_once('objects/user.php');
+require_once('ConnectionModel/user.php');
 session_start();
 
 function validation(){
@@ -53,7 +53,7 @@ function validation(){
 		if($user != null){
 			$_SESSION['username'] = $user->getUsername();
 			$_SESSION['bIsLib']   = $user->isLib();
-			header("Location: home.php");
+			header("Location: UserInterfaceModel/home.php");
 		}
 		else{
 			echo "<script>alert('User: " .$uname. " already exists.')</script>";

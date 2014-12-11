@@ -1,7 +1,7 @@
 <?php
-require_once('objects/library.php');
-require_once('objects/user.php');
-require_once('objects/rating.php');
+require_once('library.php');
+require_once('user.php');
+require_once('rating.php');
 
 session_start();
 
@@ -33,7 +33,7 @@ if(isset($_GET['function'])){
 		$rating = new rating();
 		$data = $rating->getRatings($book->getID());
 		$ret =  "<h1 style='color:#333333'>".$book->getTitle()."</h1>".
-		     "<img src='images/".$book->getTitle().".jpg' alt='".$book->getTitle()."' border=10 style='width:500;'/>".
+		     "<img src='../images/".$book->getTitle().".jpg' alt='".$book->getTitle()."' border=10 style='width:500;'/>".
 			 "<BR><BR>Director:\t".$book->getAuthor().
 			 "<BR>Movie ID:\t".$book->getID().
 			 "<BR>Copy ID:\t".$book->getCopyID().

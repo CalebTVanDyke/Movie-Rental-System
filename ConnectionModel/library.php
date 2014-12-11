@@ -19,7 +19,7 @@ class Library
      		// print book name
      		$rowStr = "<TR>";
 			
-			$file = "moviesOut.txt";
+			$file = "../DataModel/moviesOut.txt";
 			$all = file_get_contents($file);
 			$data = array();
 			
@@ -37,10 +37,10 @@ class Library
 					$rowStr .= "<TD class='book' style='border-top:none'>";
 					
 					if(in_array($book->getCopyId(), $data, FALSE) == TRUE){
-						$rowStr .= "<img id=\"checkedOut".$book->getCopyId()."\"class='span1' src='images/". $book->getTitle() .".out.jpg' alt='". $book->getTitle() ."' />"; // width=50% height=175
+						$rowStr .= "<img id=\"checkedOut".$book->getCopyId()."\"class='span1' src='../images/". $book->getTitle() .".out.jpg' alt='". $book->getTitle() ."' />"; // width=50% height=175
 					}
 					else{
-						$rowStr .= "<img class='span1' src='images/". $book->getTitle() .".jpg' alt='". $book->getTitle() ."' />"; // width=50% height=175
+						$rowStr .= "<img class='span1' src='../images/". $book->getTitle() .".jpg' alt='". $book->getTitle() ."' />"; // width=50% height=175
 					}
 					
 					$rowStr .= "<input type='hidden' value='". $book->getCopyID() ."'>";
@@ -60,7 +60,7 @@ class Library
 		$movies = self::getBooksByTitle($title);
 		$rowCount = 0;
 
-		$file = "moviesOut.txt";
+		$file = "../DataModel/moviesOut.txt";
 		$all = file_get_contents($file);
 		$data = array();
 		
@@ -133,7 +133,7 @@ class Library
 
 		//mysqli_query($conn, "INSERT INTO shelves VALUES(10, ".$shelfID.", ". $copyID .")");
 		
-		$file = "moviesOut.txt";
+		$file = "../DataModel/moviesOut.txt";
 		$all = file_get_contents($file);
 		$data = array();
 		
@@ -162,7 +162,7 @@ class Library
 	public static function deleteCopy($copyID){
 		$conn = DB::getConnection();
 		
-		//$file_put_contents("moviesOut.txt", $copyId.'\n');
+		//$file_put_contents("../DataModel/moviesOut.txt", $copyId.'\n');
 		
 		//mysqli_query($conn, "DELETE FROM bookscopy WHERE Groupnumber=10 and Copyid=".$copyID);
 		self::deleteCopyFromShelf($copyID);
@@ -171,7 +171,7 @@ class Library
 	public static function deleteCopyFromShelf($copyId){
 		$conn = DB::getConnection();
 		//mysqli_query($conn, "DELETE FROM shelves where Groupnumber=10 and Copyid=".$copyId);
-		$file = "moviesOut.txt";
+		$file = "../DataModel/moviesOut.txt";
 		$all = file_get_contents($file);
 		$data = array();
 		

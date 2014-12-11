@@ -6,7 +6,7 @@
 class Notification
 {
 
-	private $file = "notification.data.txt";
+	private $file = "../DataModel/notification.data.txt";
 	private $data = array();
 	
 	function __construct()

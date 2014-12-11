@@ -1,7 +1,7 @@
 <?php
-require_once('objects/user.php');
-require_once('objects/book.php');
-require_once('objects/library.php');
+require_once('../ConnectionModel/user.php');
+require_once('../ConnectionModel/book.php');
+require_once('../ConnectionModel/library.php');
 session_start();
 $user = unserialize($_SESSION['user']);
 
@@ -90,7 +90,7 @@ function checkRentalDue(){
 	var username = "<?php echo $user->getUsername() ?>";
 	$.ajax({
 		type : "GET",
-		url  : "router.php",
+		url  : "../ConnectionModel/router.php",
 		data : {"function":"checkDueToday","userID":username},
 		success : function(result){
 			if(result == "PASSED"){
@@ -103,7 +103,7 @@ function sendMail(){
 	var userEmail = "<?php echo $user->getEmail() ?>";
 	$.ajax({
 		type : "GET",
-		url  : "router.php",
+		url  : "../ConnectionModel/router.php",
 		data : {"function":"email","userEmail":userEmail},
 		success : function(result){
 			if(result != "")
@@ -127,7 +127,7 @@ function showModal(title, body, copyID){
 function getBookInfo(copyID){
 	$.ajax({
 		type  : "GET",
-		url   : "router.php",
+		url   : "../ConnectionModel/router.php",
 		data  : {"function": "getBookInfo","copyID": copyID},
 		success: function(result){
 			showModal("Information for Movie " + copyID, result, copyID);
@@ -146,7 +146,7 @@ function showSearch(searchType) {
 
 	$.ajax({
 		type: "GET",
-		url : "router.php",
+		url : "../ConnectionModel/router.php",
 		data : {"function" : "showSearch", "type" : searchType, "input": input},
 
 		success: function(result) {
@@ -161,7 +161,7 @@ function showSearch(searchType) {
 function updateLib(){
 	$.ajax({
 		type : "GET",
-		url  : "router.php",
+		url  : "../ConnectionModel/router.php",
 		data : {"function":"showLib"},
 		success : function(result){
 			$("#lib").html(result);
@@ -186,7 +186,7 @@ function checkOutTable(){
 	var username = "<?php echo $user->getUsername() ?>";
 	$.ajax({
 		type : "GET",
-		url	 : "router.php",
+		url	 : "../ConnectionModel/router.php",
 		data : {"function" :"viewCheckOut", "userID"	:username},
 		success	: function(result){
 			$('#checkOutTable').html(result);
@@ -198,7 +198,7 @@ function requestNotification(bookTitle){
 	var username = "<?php echo $user->getUsername() ?>";
 	$.ajax({
 		type : "GET",
-		url  : "router.php",
+		url  : "../ConnectionModel/router.php",
 		data : {"function":"requestNotification","userID":username, "bookTitle": bookTitle},
 		success : function(result){
 			
@@ -216,7 +216,7 @@ $('#viewLoansBtn').click(function(){
 	var input = $('#viewUserHistory').val();
 	$.ajax({
 		type : "GET",
-		url	 : "router.php",
+		url	 : "../ConnectionModel/router.php",
 		data : {"function" :"viewLoans", "user"	:input, "exact":"true"},
 		success	: function(result){
 			$('#historyTable').html(result);
@@ -228,7 +228,7 @@ $('#viewUserHistory').keyup(function() {
 	var input = $('#viewUserHistory').val();
 	$.ajax({
 		type : "GET",
-		url	 : "router.php",
+		url	 : "../ConnectionModel/router.php",
 		data : {"function" :"viewLoans", "user"	:input, "exact":"false"},
 		success	: function(result){
 			$('#historyTable').html(result);
@@ -242,7 +242,7 @@ $('#addBookBtn').click(function(){
 	var validated = false;
 	$.ajax({
 		type : "GET",
-		url  : "router.php",
+		url  : "../ConnectionModel/router.php",
 		data : {"function":"validate","bookName":bookName,"author":author,"qty":qty},
 		async:   false,
 		success : function(result){
@@ -256,7 +256,7 @@ $('#addBookBtn').click(function(){
 		return;
 	$.ajax({
 		type : "GET",
-		url  : "router.php",
+		url  : "../ConnectionModel/router.php",
 		data : {"function":"addBook","title":bookName,"author":author,"qty":qty},
 		success : function(result){
 			updateLib();
@@ -271,7 +271,7 @@ $('#checkoutBookBtn').click(function(){
 	var username = "<?php echo $user->getUsername() ?>";
 	$.ajax({
 		type : "GET",
-		url  : "router.php",
+		url  : "../ConnectionModel/router.php",
 		data : {"function":"checkoutBook","copyID":input.trim(),"userID":username},
 		success : function(result){
 			if(result == 'FAILED')
