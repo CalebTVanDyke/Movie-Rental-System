@@ -26,7 +26,7 @@ class Library
 			if($all){
 				$data = unserialize($all);
 			}
-			if (!is_array($data)) {
+			if (!$data) {
 				// something went wrong, initialize to empty array
 				$data = array();
 			}
@@ -37,7 +37,7 @@ class Library
 					$rowStr .= "<TD class='book' style='border-top:none'>";
 					
 					if(in_array($book->getCopyId(), $data, FALSE) == TRUE){
-						$rowStr .= "<img class='span1' src='images/". $book->getTitle() .".out.jpg' alt='". $book->getTitle() ."' />"; // width=50% height=175
+						$rowStr .= "<img id=\"checkedOut".$book->getCopyId()."\"class='span1' src='images/". $book->getTitle() .".out.jpg' alt='". $book->getTitle() ."' />"; // width=50% height=175
 					}
 					else{
 						$rowStr .= "<img class='span1' src='images/". $book->getTitle() .".jpg' alt='". $book->getTitle() ."' />"; // width=50% height=175
@@ -59,11 +59,29 @@ class Library
 
 		$movies = self::getBooksByTitle($title);
 		$rowCount = 0;
+
+		$file = "moviesOut.txt";
+		$all = file_get_contents($file);
+		$data = array();
+		
+		if($all){
+			$data = unserialize($all);
+		}
+		if (!$data) {
+			// something went wrong, initialize to empty array
+			$data = array();
+		}
+		
 		if(sizeof($movies) > 0) {
 			$rowStr = "<TR>";
 			foreach($movies as &$movie) {
 				$rowStr .= "<TD class='book' styel='border-top:none'>";
-				$rowStr .= "<img class='span1' src='images/". $movie->getTitle() .".jpg' alt='". $movie->getTitle() ."' />"; // width=50% height=175
+				if(in_array($movie->getCopyId(), $data, FALSE) == TRUE){
+					$rowStr .= "<img id=\"checkedOut".$movie->getCopyId()."\"class='span1' src='images/". $movie->getTitle() .".out.jpg' alt='". $movie->getTitle() ."' />"; // width=50% height=175
+				}
+				else{
+					$rowStr .= "<img class='span1' src='images/". $movie->getTitle() .".jpg' alt='". $movie->getTitle() ."' />"; // width=50% height=175
+				}
 				$rowStr .= "<input type='hidden' value='". $movie->getCopyID() ."'>";
 				$rowStr .= "</TD>";
 			}

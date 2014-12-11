@@ -32,7 +32,7 @@ if(isset($_POST['username'], $_POST['password'])){
 	<hr>
 	<div class="urs-container">
 		<h5>Username</h5><input name="username" type="text" placeholder="Username"><br>
-		<h5>Password</h5><input name="password" type="text" placeholder="******"><br><br>
+		<h5>Password</h5><input name="password" type="password" placeholder="******"><br><br>
 		<input type="submit" class="btn btn-success" value="Login">
 		<br><br>
 		<a href="register.php">Need to register?</a>

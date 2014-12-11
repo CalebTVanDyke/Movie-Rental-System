@@ -21,7 +21,7 @@ $user = unserialize($_SESSION['user']);
 			<li class="active"><a href="#">Account Management</a></li>
 		</ul>
 	    <ul class="nav navbar-nav navbar-right">
-			<li><button type="button" class="btn btn-danger navbar-btn" onclick="logout()">Logout <?php echo $user->getUsername() ?></button></li>
+			<li><button type="button" class="btn btn-default navbar-btn" onclick="logout()">Logout <?php echo $user->getUsername() ?></button></li>
 			<li><a style="padding-right:10px"></a>
 		</ul>
 		</div>
@@ -31,7 +31,7 @@ $user = unserialize($_SESSION['user']);
 	<div class="urs-container col-md-10">
 		<div class="row student" style="display:none">
 			<div class="col-md-5">
-				<h2>User use cases</h2>
+				<h2>Return movie</h2>
 				<input id="returnBookText" type="text" placeholder="Copyid"> <button id="returnBookBtn" type="button" class="btn btn-success">Return a Movie</button><br>
 			</div>
 			<div class="col-md-5">

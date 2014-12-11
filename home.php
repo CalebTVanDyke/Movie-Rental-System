@@ -40,7 +40,7 @@ $user = unserialize($_SESSION['user']);
 			</li>
 		</ul>
 	    <ul class="nav navbar-nav navbar-right">
-			<li><button type="button" class="btn btn-danger navbar-btn" onclick="logout()">Logout <?php echo $user->getUsername() ?></button></li>
+			<li><button type="button" class="btn btn-default navbar-btn" onclick="logout()">Logout <?php echo $user->getUsername() ?></button></li>
 			<li><a style="padding-right:10px"></a></li>
 		</ul>
 		</div>
@@ -114,6 +114,13 @@ function showModal(title, body, copyID){
     	// $('#mymodal .modal-title').html(title);
     	$('#mymodal .modal-body').html(body);
     	$('#modal-copyid').val(copyID);
+    	var checkedOut = $("#checkedOut" + copyID).html();
+    	console.log(checkedOut);
+    	if(checkedOut != undefined){
+    		$("#checkoutBookBtn").hide();
+    	}else{
+    		$("#checkoutBookBtn").show();
+    	}
         $('#mymodal').modal('show');
 }
 function getBookInfo(copyID){
@@ -131,6 +138,10 @@ function showSearch(searchType) {
 
 	var input = $("#searchTxt").val();
 	input = input.replace(" ","_");
+	if(input == ""){
+		updateLib()
+		return;
+	}
 
 	$.ajax({
 		type: "GET",

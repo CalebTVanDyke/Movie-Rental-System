@@ -75,7 +75,7 @@ if(isset($_GET['function'])){
 	if($function == 'returnBook'){
 		$book = Book::getBookInfoByCopyID($_GET['copyID']);
 		$bookTitle = str_replace("_", " ", $book["Booktitle"]);
-		$ret = "<div>Would you please rate the movie?</div>";
+		$ret = "<div>Would you please rate " . $bookTitle . "?</div>";
 		$ret = $ret."<div id=\"".$book["Bookid"]."\" class=\"rate_widget\">";
 		$ret = $ret."<div class=\"star_1 ratings_stars\"></div>";
 		$ret = $ret."<div class=\"star_2 ratings_stars\"></div>";

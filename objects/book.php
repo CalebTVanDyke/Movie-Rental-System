@@ -46,7 +46,7 @@ class Book
 	public static function getBookInfoByCopyID($copyID){
 		$conn = DB::getConnection();
 
-		$result = mysqli_query($conn, "SELECT c.Bookid, b.Booktitle from bookscopy c INNER JOIN books b ON b.Bookid = c.Bookid where c.Groupnumber=10 and c.Copyid='".$copyID."'");
+		$result = mysqli_query($conn, "SELECT c.Bookid, b.Booktitle from bookscopy c INNER JOIN books b ON b.Bookid = c.Bookid where c.Groupnumber=10 and b.Groupnumber=10 and c.Copyid='".$copyID."'");
 		$row = mysqli_fetch_array($result);
 		$bookId = $row['Bookid'];
 		$bookInfo = array();
