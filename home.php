@@ -19,6 +19,7 @@ $user = unserialize($_SESSION['user']);
 <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <title>Unified Rental Service</title>
+
 <body>
 	<!-- nav bar, goes at the top of every page -->
 	<nav class="navbar navbar-inverse" role="navigation">
